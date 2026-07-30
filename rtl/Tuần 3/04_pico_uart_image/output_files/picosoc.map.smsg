@@ -1,0 +1,23 @@
+Warning (10273): Verilog HDL warning at picorv32.v(270): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 270
+Warning (10273): Verilog HDL warning at picorv32.v(290): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 290
+Warning (10273): Verilog HDL warning at picorv32.v(297): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 297
+Warning (10273): Verilog HDL warning at picorv32.v(356): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 356
+Warning (10273): Verilog HDL warning at picorv32.v(358): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 358
+Warning (10273): Verilog HDL warning at picorv32.v(1000): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1000
+Warning (10273): Verilog HDL warning at picorv32.v(1209): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1209
+Warning (10273): Verilog HDL warning at picorv32.v(1226): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1226
+Warning (10273): Verilog HDL warning at picorv32.v(1265): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1265
+Warning (10273): Verilog HDL warning at picorv32.v(1296): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1296
+Warning (10273): Verilog HDL warning at picorv32.v(1311): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1311
+Warning (10273): Verilog HDL warning at picorv32.v(1312): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1312
+Warning (10273): Verilog HDL warning at picorv32.v(1324): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1324
+Warning (10273): Verilog HDL warning at picorv32.v(1325): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1325
+Warning (10273): Verilog HDL warning at picorv32.v(1343): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1343
+Warning (10273): Verilog HDL warning at picorv32.v(1344): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1344
+Warning (10273): Verilog HDL warning at picorv32.v(1347): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1347
+Warning (10273): Verilog HDL warning at picorv32.v(1368): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1368
+Warning (10273): Verilog HDL warning at picorv32.v(1493): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1493
+Warning (10273): Verilog HDL warning at picorv32.v(1494): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1494
+Warning (10273): Verilog HDL warning at picorv32.v(1880): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1880
+Warning (10268): Verilog HDL information at picorv32.v(1309): always construct contains both blocking and non-blocking assignments File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 1309
+Warning (10273): Verilog HDL warning at picorv32.v(2264): extended using "x" or "z" File: E:/Quartus/Project_Quartus/03_pico_ver2_uart/picorv32.v Line: 2264

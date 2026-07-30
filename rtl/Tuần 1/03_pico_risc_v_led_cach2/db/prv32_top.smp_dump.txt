@@ -1,0 +1,29 @@
+
+State Machine - |prv32_top|picorv32:cpu|mem_wordsize
+Name mem_wordsize.00 mem_wordsize.10 mem_wordsize.01 
+mem_wordsize.00 0 0 0 
+mem_wordsize.01 1 0 1 
+mem_wordsize.10 1 1 0 
+
+State Machine - |prv32_top|picorv32:cpu|cpu_state
+Name cpu_state.cpu_state_trap cpu_state.cpu_state_fetch cpu_state.cpu_state_ld_rs1 cpu_state.cpu_state_ld_rs2 cpu_state.cpu_state_exec cpu_state.cpu_state_shift cpu_state.cpu_state_stmem cpu_state.cpu_state_ldmem 
+cpu_state.cpu_state_trap 0 0 0 0 0 0 0 0 
+cpu_state.cpu_state_stmem 1 0 0 0 0 0 1 0 
+cpu_state.cpu_state_shift 1 0 0 0 0 1 0 0 
+cpu_state.cpu_state_exec 1 0 0 0 1 0 0 0 
+cpu_state.cpu_state_ld_rs2 1 0 0 1 0 0 0 0 
+cpu_state.cpu_state_ld_rs1 1 0 1 0 0 0 0 0 
+cpu_state.cpu_state_fetch 1 1 0 0 0 0 0 0 
+cpu_state.cpu_state_ldmem 1 0 0 0 0 0 0 1 
+
+State Machine - |prv32_top|uartTx:uartTx|state
+Name state.00000000 state.00000010 state.00000001 
+state.00000000 0 0 0 
+state.00000001 1 0 1 
+state.00000010 1 1 0 
+
+State Machine - |prv32_top|uart_rx:uart_rx|state
+Name state.00 state.10 state.01 
+state.00 0 0 0 
+state.01 1 0 1 
+state.10 1 1 0 

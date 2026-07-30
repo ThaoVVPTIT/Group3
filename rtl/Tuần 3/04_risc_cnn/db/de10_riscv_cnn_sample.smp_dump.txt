@@ -1,0 +1,41 @@
+
+State Machine - |top|cnn_mmio_controller:cnn_mmio|state
+Name state.ST_WAIT_RESULT state.ST_STREAM state.ST_PRIME state.ST_IDLE state.ST_COOLDOWN 
+state.ST_IDLE 0 0 0 0 0 
+state.ST_PRIME 0 0 1 1 0 
+state.ST_STREAM 0 1 0 1 0 
+state.ST_WAIT_RESULT 1 0 0 1 0 
+state.ST_COOLDOWN 0 0 0 1 1 
+
+State Machine - |top|picosoc:soc_core|spimemio:spimemio|state
+Name state.1100 state.1011 state.1010 state.1001 state.1000 state.0111 state.0110 state.0101 state.0100 state.0011 state.0010 state.0001 state.0000 
+state.0000 0 0 0 0 0 0 0 0 0 0 0 0 0 
+state.0001 0 0 0 0 0 0 0 0 0 0 0 1 1 
+state.0010 0 0 0 0 0 0 0 0 0 0 1 0 1 
+state.0011 0 0 0 0 0 0 0 0 0 1 0 0 1 
+state.0100 0 0 0 0 0 0 0 0 1 0 0 0 1 
+state.0101 0 0 0 0 0 0 0 1 0 0 0 0 1 
+state.0110 0 0 0 0 0 0 1 0 0 0 0 0 1 
+state.0111 0 0 0 0 0 1 0 0 0 0 0 0 1 
+state.1000 0 0 0 0 1 0 0 0 0 0 0 0 1 
+state.1001 0 0 0 1 0 0 0 0 0 0 0 0 1 
+state.1010 0 0 1 0 0 0 0 0 0 0 0 0 1 
+state.1011 0 1 0 0 0 0 0 0 0 0 0 0 1 
+state.1100 1 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |top|picosoc:soc_core|picorv32:cpu|mem_wordsize
+Name mem_wordsize.00 mem_wordsize.10 mem_wordsize.01 
+mem_wordsize.00 0 0 0 
+mem_wordsize.01 1 0 1 
+mem_wordsize.10 1 1 0 
+
+State Machine - |top|picosoc:soc_core|picorv32:cpu|cpu_state
+Name cpu_state.cpu_state_trap cpu_state.cpu_state_fetch cpu_state.cpu_state_ld_rs1 cpu_state.cpu_state_ld_rs2 cpu_state.cpu_state_exec cpu_state.cpu_state_shift cpu_state.cpu_state_stmem cpu_state.cpu_state_ldmem 
+cpu_state.cpu_state_ldmem 0 0 0 0 0 0 0 0 
+cpu_state.cpu_state_stmem 0 0 0 0 0 0 1 1 
+cpu_state.cpu_state_shift 0 0 0 0 0 1 0 1 
+cpu_state.cpu_state_exec 0 0 0 0 1 0 0 1 
+cpu_state.cpu_state_ld_rs2 0 0 0 1 0 0 0 1 
+cpu_state.cpu_state_ld_rs1 0 0 1 0 0 0 0 1 
+cpu_state.cpu_state_fetch 0 1 0 0 0 0 0 1 
+cpu_state.cpu_state_trap 1 0 0 0 0 0 0 1 

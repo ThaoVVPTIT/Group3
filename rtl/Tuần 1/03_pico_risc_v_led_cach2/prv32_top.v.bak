@@ -1,0 +1,278 @@
+//
+// Pico RISCV32 top file - DE10-Lite Minimal Version
+//
+// Equivalent to src_HUNG/top.v running on Tang Nano.
+// Peripherals: CPU (PicoRV32) + RAM (iram) + GPIO + UART TX/RX
+// Removed: Audio (sd_audio), VGA (vgatext), Timer, SPI
+//
+`include "timescale.vh"
+
+module prv32_top (
+
+    input wire           CLOCK_50,
+    input wire           reset_btn,
+    output wire [9:0]    LED,
+
+    input wire [0:0]     porta_in,
+
+    // UART
+    output wire          UART_TX,
+    input wire           UART_RX,
+
+    // Debug outputs (optional: connect bit_clock to a spare GPIO to observe)
+    output wire          bit_clock
+
+    );
+
+    wire        trap;
+
+    wire        mem_valid;
+    wire        mem_instr;
+    wire        mem_ready;
+
+    wire [31:0] mem_addr;
+    wire [31:0] mem_wdata;
+    wire [3:0]  mem_wstrb;
+    wire [31:0] mem_rdata;
+
+    // Per-peripheral rdata / ready signals
+    wire [31:0] mem_rdata_mem;
+    wire [31:0] mem_rdata_gpio;
+    wire [31:0] mem_rdata_uart_tx;
+    wire [31:0] mem_rdata_uart_rx;
+
+    wire        mem_ready_mem;
+    wire        mem_ready_gpio;
+    wire        mem_ready_uart_tx;
+    wire        mem_ready_uart_rx;
+
+    // Look-Ahead Interface
+    wire        mem_la_read;
+    wire        mem_la_write;
+    wire [31:0] mem_la_addr;
+    wire [31:0] mem_la_wdata;
+    wire [3:0]  mem_la_wstrb;
+
+    // Pico Co-Processor Interface (PCPI) - tied off
+    wire        pcpi_valid;
+    wire [31:0] pcpi_insn;
+    wire [31:0] pcpi_rs1;
+    wire [31:0] pcpi_rs2;
+    reg         pcpi_wr;
+    reg  [31:0] pcpi_rd;
+    reg         pcpi_wait;
+    reg         pcpi_ready;
+
+    // GPIO input
+    wire [31:0] gpio_in;
+
+    // IRQ Interface - tied off
+    reg  [31:0] irq;
+    wire [31:0] eoi;
+
+    // Trace Interface
+    wire        trace_valid;
+    wire [35:0] trace_data;
+
+    // Peripheral enables from address_decoder
+    wire enable_audio_ctrl; // unused but decoder still drives it
+    wire enable_video_ctrl; // unused
+    wire enable_spi;        // unused
+    wire enable_timers;     // unused
+    wire enable_uart_tx;
+    wire enable_uart_rx;
+    wire enable_gpio;
+    wire enable_audio_ram;  // unused
+    wire enable_video_ram;  // unused
+    wire enable_sdram;      // unused
+    wire enable_sram;
+
+    // -------------------------------------------------------
+    // Reset sequencer: hold reset for ~100 clock cycles
+    // -------------------------------------------------------
+    reg resetn = 0;
+    reg [7:0] resetCount = 0;
+
+    wire CLOCK_100;
+    wire CLOCK_100_SHIFTED;
+    wire CLOCK_LOCKED;
+
+    always @(posedge CLOCK_100)
+    begin
+        if (reset_btn == 1'b0)
+            begin
+                resetn     <= 1'b0;
+                resetCount <= 8'h0;
+            end
+        else
+            resetCount <= resetCount + 1;
+
+        if (resetCount == 100) resetn <= 1;
+    end
+
+    assign gpio_in = { 31'h0, porta_in[0] };
+
+    // -------------------------------------------------------
+    // PLL: 50MHz -> 100MHz
+    // -------------------------------------------------------
+    pll_sys pll_sys_inst (
+        .inclk0 (CLOCK_50),
+        .c0     (CLOCK_100),          // 100 MHz system clock
+        .c1     (CLOCK_100_SHIFTED),  // phase-shifted (for SDRAM, not used here)
+        .locked (CLOCK_LOCKED)
+    );
+
+    // -------------------------------------------------------
+    // Tie off unused PCPI / IRQ signals
+    // -------------------------------------------------------
+    initial begin
+        pcpi_wr    = 0;
+        pcpi_rd    = 0;
+        pcpi_wait  = 0;
+        pcpi_ready = 0;
+        irq        = 0;
+    end
+
+    // -------------------------------------------------------
+    // RAM (iram IP block from Quartus)
+    // -------------------------------------------------------
+    memory mem (
+        .clk       (CLOCK_100),
+        .enable    (enable_sram),
+        .mem_valid (mem_valid),
+        .mem_ready (mem_ready_mem),
+        .mem_instr (mem_instr),
+        .mem_wstrb (mem_wstrb),
+        .mem_wdata (mem_wdata),
+        .mem_addr  (mem_addr),
+        .mem_rdata (mem_rdata_mem)
+    );
+
+    // -------------------------------------------------------
+    // GPIO
+    // -------------------------------------------------------
+    gpio gpio (
+        .clk       (CLOCK_100),
+        .resetn    (resetn),
+        .enable    (enable_gpio),
+        .mem_valid (mem_valid),
+        .mem_ready (mem_ready_gpio),
+        .mem_instr (mem_instr),
+        .mem_wstrb (mem_wstrb),
+        .mem_wdata (mem_wdata),
+        .mem_addr  (mem_addr),
+        .mem_rdata (mem_rdata_gpio),
+        .gpio      (LED),
+        .gpio_in   (gpio_in)
+    );
+
+    // -------------------------------------------------------
+    // UART RX
+    // -------------------------------------------------------
+    uart_rx uart_rx (
+        .clk        (CLOCK_100),
+        .resetn     (resetn),
+        .enable     (enable_uart_rx),
+        .mem_valid  (mem_valid),
+        .mem_ready  (mem_ready_uart_rx),
+        .mem_instr  (mem_instr),
+        .mem_wstrb  (mem_wstrb),
+        .mem_wdata  (mem_wdata),
+        .mem_addr   (mem_addr),
+        .mem_rdata  (mem_rdata_uart_rx),
+        .bit_clock_o(bit_clock),
+        .serial_in  (UART_RX)
+    );
+
+    // -------------------------------------------------------
+    // UART TX
+    // -------------------------------------------------------
+    uartTx uartTx (
+        .clk       (CLOCK_100),
+        .resetn    (resetn),
+        .enable    (enable_uart_tx),
+        .mem_valid (mem_valid),
+        .mem_ready (mem_ready_uart_tx),
+        .mem_instr (mem_instr),
+        .mem_wstrb (mem_wstrb),
+        .mem_wdata (mem_wdata),
+        .mem_addr  (mem_addr),
+        .mem_rdata (mem_rdata_uart_tx),
+        .serialOut (UART_TX)
+    );
+
+    // -------------------------------------------------------
+    // Address Decoder
+    // -------------------------------------------------------
+    address_decoder ad (
+        .address         (mem_addr),
+        .enable_audio_ctrl(enable_audio_ctrl),
+        .enable_video_ctrl(enable_video_ctrl),
+        .enable_spi      (enable_spi),
+        .enable_timers   (enable_timers),
+        .enable_uart_tx  (enable_uart_tx),
+        .enable_uart_rx  (enable_uart_rx),
+        .enable_gpio     (enable_gpio),
+        .enable_audio_ram(enable_audio_ram),
+        .enable_video_ram(enable_video_ram),
+        .enable_sdram    (enable_sdram),
+        .enable_sram     (enable_sram)
+    );
+
+    // -------------------------------------------------------
+    // OR-bus: gộp rdata và ready từ các ngoại vi cần dùng
+    // -------------------------------------------------------
+    assign mem_rdata = mem_rdata_mem | mem_rdata_gpio | mem_rdata_uart_tx | mem_rdata_uart_rx;
+    assign mem_ready = mem_ready_mem | mem_ready_gpio | mem_ready_uart_tx | mem_ready_uart_rx;
+
+    // -------------------------------------------------------
+    // PicoRV32 CPU
+    // -------------------------------------------------------
+    defparam cpu.BARREL_SHIFTER    = 1;
+    defparam cpu.TWO_CYCLE_COMPARE = 1;
+    defparam cpu.TWO_CYCLE_ALU     = 1;
+    defparam cpu.ENABLE_PCPI       = 0; // disabled to save LEs
+    defparam cpu.ENABLE_FAST_MUL   = 0;
+    defparam cpu.ENABLE_DIV        = 0;
+
+    picorv32 cpu (
+        .clk      (CLOCK_100),
+        .resetn   (resetn),
+        .trap     (trap),
+
+        .mem_valid(mem_valid),
+        .mem_instr(mem_instr),
+        .mem_ready(mem_ready),
+
+        .mem_addr (mem_addr),
+        .mem_wdata(mem_wdata),
+        .mem_wstrb(mem_wstrb),
+        .mem_rdata(mem_rdata),
+
+        // Look-Ahead Interface
+        .mem_la_read (mem_la_read),
+        .mem_la_write(mem_la_write),
+        .mem_la_addr (mem_la_addr),
+        .mem_la_wdata(mem_la_wdata),
+        .mem_la_wstrb(mem_la_wstrb),
+
+        // PCPI - tied off
+        .pcpi_valid(pcpi_valid),
+        .pcpi_insn (pcpi_insn),
+        .pcpi_rs1  (pcpi_rs1),
+        .pcpi_rs2  (pcpi_rs2),
+        .pcpi_wr   (pcpi_wr),
+        .pcpi_rd   (pcpi_rd),
+        .pcpi_wait (pcpi_wait),
+        .pcpi_ready(pcpi_ready),
+
+        // IRQ - tied off
+        .irq(irq),
+        .eoi(eoi),
+
+        // Trace - tied off
+        .trace_valid(trace_valid),
+        .trace_data (trace_data)
+    );
+
+endmodule

@@ -1,0 +1,24 @@
+# vsim -c -l reports/modelsim_mmio_3runs.log -do "run -all; quit -f" work.cnn_mmio_tb 
+# Start time: 10:45:47 on Jul 28,2026
+# Loading work.cnn_mmio_tb
+# Loading work.cnn_mmio_controller
+# Loading work.cnn_input_ram
+# Loading work.axis_cnn_mnist
+# Loading work.conv1_layer
+# Loading work.conv1_buf
+# Loading work.conv1_calc
+# Loading work.maxpool_relu
+# Loading work.conv2_layer
+# Loading work.conv2_buf
+# Loading work.conv2_calc
+# Loading work.fully_connected
+# Loading work.comparator
+# run -all
+# RUN 1 PASS: class=3 cycles=1282 frame=1
+# RUN 2 PASS: class=3 cycles=1282 frame=2
+# RUN 3 PASS: class=3 cycles=1282 frame=3
+# ALL MMIO START->DONE TESTS PASS
+# ** Note: $finish    : sim/cnn_mmio_tb.v(140)
+#    Time: 171410 ns  Iteration: 1  Instance: /cnn_mmio_tb
+# End time: 10:45:48 on Jul 28,2026, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0

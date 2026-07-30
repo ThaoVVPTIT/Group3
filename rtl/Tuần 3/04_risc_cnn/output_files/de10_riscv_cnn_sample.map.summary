@@ -1,0 +1,16 @@
+Analysis & Synthesis Status : Successful - Tue Jul 28 16:22:23 2026
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : de10_riscv_cnn_sample
+Top-level Entity Name : top
+Family : MAX 10
+Total logic elements : 41,698
+    Total combinational functions : 37,742
+    Dedicated logic registers : 13,092
+Total registers : 13092
+Total pins : 25
+Total virtual pins : 0
+Total memory bits : 270,464
+Embedded Multiplier 9-bit elements : 96
+Total PLLs : 0
+UFM blocks : 0
+ADC blocks : 0

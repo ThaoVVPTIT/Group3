@@ -1,0 +1,18 @@
+Fitter Status : Successful - Fri Jul 24 01:39:26 2026
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : prv32_top
+Top-level Entity Name : prv32_top
+Family : MAX 10
+Device : 10M50DAF484C7G
+Timing Models : Final
+Total logic elements : 2,665 / 49,760 ( 5 % )
+    Total combinational functions : 2,540 / 49,760 ( 5 % )
+    Dedicated logic registers : 1,155 / 49,760 ( 2 % )
+Total registers : 1155
+Total pins : 16 / 360 ( 4 % )
+Total virtual pins : 0
+Total memory bits : 1,050,624 / 1,677,312 ( 63 % )
+Embedded Multiplier 9-bit elements : 8 / 288 ( 3 % )
+Total PLLs : 1 / 4 ( 25 % )
+UFM blocks : 0 / 1 ( 0 % )
+ADC blocks : 0 / 2 ( 0 % )
