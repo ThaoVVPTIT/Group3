@@ -1,0 +1,1 @@
+python "D:\Python\intership\test_risc_cnn.py" --port COM3 --input "E:\Quartus\Project_Quartus\05_pico_cnn_axi\data\mnist_vector0.mem" --index 0 --repeat 3 --expected 3

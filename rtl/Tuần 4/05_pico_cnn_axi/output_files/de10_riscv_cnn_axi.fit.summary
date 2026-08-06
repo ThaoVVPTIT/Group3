@@ -1,0 +1,18 @@
+Fitter Status : Successful - Sat Aug 01 19:52:46 2026
+Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Revision Name : de10_riscv_cnn_axi
+Top-level Entity Name : top_axi
+Family : MAX 10
+Device : 10M50DAF484C7G
+Timing Models : Final
+Total logic elements : 38,885 / 49,760 ( 78 % )
+    Total combinational functions : 37,540 / 49,760 ( 75 % )
+    Dedicated logic registers : 13,106 / 49,760 ( 26 % )
+Total registers : 13106
+Total pins : 25 / 360 ( 7 % )
+Total virtual pins : 0
+Total memory bits : 270,464 / 1,677,312 ( 16 % )
+Embedded Multiplier 9-bit elements : 96 / 288 ( 33 % )
+Total PLLs : 0 / 4 ( 0 % )
+UFM blocks : 0 / 1 ( 0 % )
+ADC blocks : 0 / 2 ( 0 % )

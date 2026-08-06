@@ -1,0 +1,1 @@
+python "E:\Quartus\Project_Quartus\05_pico_cnn_axi\host\test_riscv_cnn_batch.py" --port COM3 --count 1000
